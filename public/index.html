@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+    <main class="valign-wrapper" id="loginPage">
+        <div class="container">
+            <div class="row">
+                    <form>
+                            <div class="input-field col s12">
+                                <input placeholder="Username" id="username" type="text" class="validate">
+                                <label for="username">Username</label>
+                            </div>
+                            <div class="input-field col s12">
+                                <input id="password" type="password" class="validate active" placeholder="Password" >
+                                <label for="password">Password</label>
+                            </div>
+                    </form>
+                        <div class = "container">
+                            <button class="btn waves-effect waves-light right red darken-1" type="submit" name="action" id="loginSubmit">Submit
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                <div class="container">
+                    <a href="/signup" rel="external" class="loginLink">Sign-up</a> 
+                </div>
+            </div>
+        </main> 
+    <div id="content"></div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+</html>
