@@ -46,8 +46,8 @@ module.exports = function (app) {
 
     app.get('/api/getNotes/:id', function(req, res){
         db.User.findById({_id: req.params.id})
-        .populate({path: 'notes', model: 'Notes', populate:{path:'sender', model: 'User'}})
-        .populate({path: 'notes', model: 'Notes', populate:{path:'recipient', model: 'User'}})
+        .populate({path: 'notes', model: 'Notes', populate:{path:'sender', model: 'User'}, options: {sort: { _id: -1 }}})
+        .populate({path: 'notes', model: 'Notes', populate:{path:'recipient', model: 'User'}, options: {sort: { _id: -1 }}})
         .then(function(data){
             res.json(data);
         });
@@ -56,7 +56,7 @@ module.exports = function (app) {
     app.get('/api/getReceived/:id', function(req, res){
         db.Notes.find({recipient: req.params.id})
         .populate({path: 'sender', model: 'User'})
-        .populate({path: 'recipient', model: 'User'})
+        .populate({path: 'recipient', model: 'User'}).sort({_id:-1})
         .then(function(data){
             res.json(data);
         })

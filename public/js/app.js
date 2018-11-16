@@ -140,10 +140,10 @@ const renderNotes = function(data) {
                                     </div>
                                     <div class="container">
                                         <div class="row">
-                                            <div class=" col s6 center">
+                                            <div class=" col s6 center text">
                                                 Sender: ${data[i].sender[0].username}
                                             </div>
-                                            <div class="col s6 center">
+                                            <div class="col s6 center text">
                                                 Recipient: ${data[i].recipient[0].username}
                                             </div>
                                         </div>
