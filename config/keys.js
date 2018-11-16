@@ -1,0 +1,1 @@
+module.exports = "mongodb://tcgettler2090:Capell-1@ds037407.mlab.com:37407/kudoskernal"

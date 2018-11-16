@@ -4,6 +4,7 @@ const session  = require('express-session')
 const mongoose = require('mongoose');
 const path = require('path');
 const db = require('./models/Index.js');
+const MONGODB_URI = require('./Config/keys')
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -16,7 +17,7 @@ app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized:true}))
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
-mongoose.connect('mongodb://localhost/kudoskernals', { useNewUrlParser: true });
+mongoose.connect(MONGODB_URI || 'mongodb://localhost/kudoskernals', { useNewUrlParser: true });
 
 require('./routes/api-routes')(app);
 require('./routes/html-routes')(app);
