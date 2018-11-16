@@ -1,3 +1,4 @@
+/**********************************************Login functions ******************************************************/
 $('#loginSubmit').on('click', function(event){
     event.preventDefault;
     const login = {username: $('#username').val().trim(), password: $('#password').val()};
@@ -86,6 +87,8 @@ $('#signup').validate({
     }
 });
 
+/**********************************************************End of login functions ******************************************/
+/****************************************************Get Notes functions ************************************************/
 const getNotes = function(){
     $.ajax({
         url: "/api/getNotes",
@@ -93,8 +96,38 @@ const getNotes = function(){
     }).then(function(response){
         renderNotes(response);
     });
-}
+};
 
+const filterSent = function(){
+    $.ajax({
+        url: '/login',
+        method: 'GET'
+    }).then(function(user){
+        $.ajax({
+            url: `/api/getNotes/${user._id}`,
+            method: 'GET'
+        }).then(function(response){
+            const notes = response.notes
+            renderNotes(notes);
+        })
+    })
+};
+
+const filterReceived = function(){
+    $.ajax({
+        url: '/login',
+        method: 'GET'
+    }).then(function(user){
+        $.ajax({
+            url: `/api/getReceived/${user._id}`,
+            method: 'GET'
+        }).then(function(response){
+            renderNotes(response);
+        })
+    })
+};
+/*********************************************************End of Get Notes functions ******************************************/
+// render notes function
 const renderNotes = function(data) {
     $('#content').empty();
     for (let i = 0; i < data.length; i ++){
@@ -122,6 +155,7 @@ const renderNotes = function(data) {
     }
 }
 
+//post note function
 const prepareMessage = function() {
     $.ajax({
         url: '/login',
@@ -142,40 +176,13 @@ const prepareMessage = function() {
                 M.toast({html: 'Kudos given!'});
                 getNotes();
             }
+        }).catch(function(err){
+            M.toast({html: "Form not filled out!"})
         })
     });
 }
 
-const filterSent = function(){
-    $.ajax({
-        url: '/login',
-        method: 'GET'
-    }).then(function(user){
-        $.ajax({
-            url: `/api/getNotes/${user._id}`,
-            method: 'GET'
-        }).then(function(response){
-            const notes = response.notes
-            console.log(notes);
-            renderNotes(notes);
-        })
-    })
-}
-
-const filterReceived = function(){
-    $.ajax({
-        url: '/login',
-        method: 'GET'
-    }).then(function(user){
-        $.ajax({
-            url: `/api/getReceived/${user._id}`,
-            method: 'GET'
-        }).then(function(response){
-            console.log(response);
-            renderNotes(response);
-        })
-    })
-}
+/********************************************Functionality Functions ******************************************/
 $(document).ready(function(){
     $('.dropdown-trigger').dropdown();
     $('.modal').modal();
@@ -184,6 +191,7 @@ $(document).ready(function(){
     getNotes();
 });
 
+/****************************************Start of Kudos buttons ****************************************/
 $('#kudosTrigger').on('click', function(event){
     event.preventDefault();
     $('#sender').empty();
@@ -214,7 +222,8 @@ $('#kudosSubmit').on('click', function(event){
     event.preventDefault();
     prepareMessage();
 });
-
+/***************************************End of Kudos Functions **********************************************/
+/***************************************Start of View Filter Functions ******************************************/
 $('#all').on('click', function(event){
     event.preventDefault();
     $('#sent').removeClass('disabled');
@@ -238,3 +247,5 @@ $('#received').on('click', function(event){
     $('#received').addClass('disabled');
     filterReceived();
 })
+
+/******************************************End of View Filter Functions */

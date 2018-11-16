@@ -4,6 +4,7 @@ const passport = require('passport'),
 const db = require('../models/Index.js');
 
 module.exports = function (app) {
+    /*********************************************Signin API Calls **********************************************/
     app.post('/api/newUser', function (req, res) {
         let hash = bcrypt.hashSync(req.body.password, 10);
         db.User.create({
@@ -32,7 +33,8 @@ module.exports = function (app) {
     app.get('/login', isLoggedIn, function(req, res){
         res.json(req.user);
     })
-
+    /*********************************************************End of signin api calls **************************************************/
+    /*******************************************************Finding notes calls *****************************************************/
     app.get('/api/getNotes', function(req, res){
         db.Notes.find({})
         .populate({path: 'sender', model: 'User'})
@@ -58,18 +60,22 @@ module.exports = function (app) {
         .then(function(data){
             res.json(data);
         })
-    })
-
+    });
+    /*******************************************************End of finding note calls ***********************************/
+    // Used to populate options form
     app.get('/api/getUsers', function(req, res){
         db.User.find({}).then(function(data){
             res.json(data);
         })
     });
-    
+
+    //Used to post new note
     app.post('/api/newNote', function(req,res){
         db.Notes.create(req.body).then(function(response){
             db.User.findByIdAndUpdate({_id: response.sender}, {$push: {notes:response._id}}).then(function(data){
                 res.json({success: "success"})
+            }).catch(function(err){
+                res.json(err);
             });
         });
     })
