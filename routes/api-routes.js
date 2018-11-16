@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const passport = require('passport'), 
     LocalStrategy = require('passport-local').Strategy;
-const db = require('../models/Index');
+const db = require('../models/Index.js');
 
 module.exports = function (app) {
     app.post('/api/newUser', function (req, res) {
@@ -31,5 +31,46 @@ module.exports = function (app) {
 
     app.get('/login', isLoggedIn, function(req, res){
         res.json(req.user);
+    })
+
+    app.get('/api/getNotes', function(req, res){
+        db.Notes.find({})
+        .populate({path: 'sender', model: 'User'})
+        .populate({path: 'recipient', model: 'User'}).sort({_id: -1})
+        .then(function(data){
+            res.json(data);
+        })
+    });
+
+    app.get('/api/getNotes/:id', function(req, res){
+        db.User.findById({_id: req.params.id})
+        .populate({path: 'notes', model: 'Notes', populate:{path:'sender', model: 'User'}})
+        .populate({path: 'notes', model: 'Notes', populate:{path:'recipient', model: 'User'}})
+        .then(function(data){
+            res.json(data);
+        });
+    });
+
+    app.get('/api/getReceived/:id', function(req, res){
+        db.Notes.find({recipient: req.params.id})
+        .populate({path: 'sender', model: 'User'})
+        .populate({path: 'recipient', model: 'User'})
+        .then(function(data){
+            res.json(data);
+        })
+    })
+
+    app.get('/api/getUsers', function(req, res){
+        db.User.find({}).then(function(data){
+            res.json(data);
+        })
+    });
+    
+    app.post('/api/newNote', function(req,res){
+        db.Notes.create(req.body).then(function(response){
+            db.User.findByIdAndUpdate({_id: response.sender}, {$push: {notes:response._id}}).then(function(data){
+                res.json({success: "success"})
+            });
+        });
     })
 }

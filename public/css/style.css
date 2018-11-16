@@ -9,3 +9,17 @@
 #kudos{
     height:100vh;
 }
+
+.select-dropdown {
+    vertical-align:top;
+    height:25vh;
+    overflow-y:auto;
+}
+
+#sender{
+    margin-top: 4%;
+}
+
+.modal-content{
+    height:30vh;
+}

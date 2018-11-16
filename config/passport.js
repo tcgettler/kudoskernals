@@ -12,7 +12,7 @@ module.exports = function(passport, user){
   passport.deserializeUser(function(id, done) {
     User.findById(id).then(function(user) {
       if(user){
-        done(null, user.get());
+        done(null, user);
       }
       else{
         done(user.errors,null);
@@ -29,33 +29,24 @@ module.exports = function(passport, user){
   
     function(req, username, password, done) {
   
-      var User = user;
+     
   
-      var isValidPassword = function(userpass, password){
-        return bcrypt.compareSync(userpass, password);
-      }
+      User.findOne({ username: username }).then(function (user) {
+        user.comparePassword(password, function (error, response) {
+          if (error) {
+            return done(null, error)
+          }
+      });
   
-      User.findOne({ where : { username: username}}).then(function (user) {
-        console.log(user);
-        if (!user) {
-          return done(null, false, { message: 'Email does not exist' });
-        }
-  
-        if (!isValidPassword(user.password, password)) {
-        
-          return done(null, false, { message: 'Incorrect password.' });
-  
-        }
-  
-        var userinfo = user.get();
         console.log("On to the next one");
-        return done(null,userinfo);
+        return done(null,user);
   
       }).catch(function(err){
   
         console.log("Error:",err);
   
         return done(null, false, { message: 'Something went wrong with your Signin' });
+  
   
       });
   

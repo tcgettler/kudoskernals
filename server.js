@@ -3,7 +3,7 @@ const passport = require("passport");
 const session  = require('express-session')
 const mongoose = require('mongoose');
 const path = require('path');
-const db = require('./models/Index');
+const db = require('./models/Index.js');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -17,7 +17,6 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
 mongoose.connect('mongodb://localhost/kudoskernals', { useNewUrlParser: true });
-
 
 require('./routes/api-routes')(app);
 require('./routes/html-routes')(app);

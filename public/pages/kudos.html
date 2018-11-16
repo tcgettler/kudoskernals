@@ -5,12 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div id="kudosForm" class="modal bottom-sheet">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row valign-wrapper">
+                    <h6 class="col s3" id="sender"></h6>
+                    <div class="input-field col s5">
+                        <input value="" id="title" type="text" class="validate">
+                        <label class="active" for="title">Title</label>
+                    </div>
+                    <div class="input-field col s4">
+                        <select id="recipients">
+                            <option value="" disabled selected>Recipient</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <div class="input-field">
+                                <input id="message" type="text" maxlength="120" data-length="120" >
+                                <label for="message">Input text</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>     
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat" id="kudosSubmit">Submit</a>
+        </div>
+  </div>
     <main id="kudos">
-        <div class="container" id="posts"> 
+        <div class="container">
+            <div class="row">
+                <div class="col s2">
+                    <div class="row">
+                        <a class="waves-effect waves-light indigo lighten-2 btn-floating" id="kudosTrigger"><i class="material-icons left">add</i></a>
+                    </div>
+                    <div class="row">
+                        <a class="waves-effect waves-light indigo lighten-2 btn-floating dropdown-trigger"  data-target='menu'><i class="material-icons medium center">remove_red_eye</i></a>
+                         <ul id='menu' class='dropdown-content'>
+                            <a class="waves-effect waves-light indigo lighten-2 btn col s12 disabled" id="all">All</a>
+                            <a class="waves-effect waves-light indigo lighten-2 btn col s12" id="sent">Sent</a>
+                            <a class="waves-effect waves-light indigo lighten-2 btn col s12" id="received">Received</a>
+                        </ul>
+                    </div>
+                   
+                </div>
+                <div class="col s10" id="content">
+
+                </div>
+            </div>
+
 
         </div>
     </main>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./js/app.js"></script>
 </body>
 </html>
